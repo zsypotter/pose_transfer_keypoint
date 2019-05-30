@@ -1,0 +1,5 @@
+================ Training Loss (Thu May 30 10:32:09 2019) ================
+(epoch: 1, iters: 200, time: 0.176) pair_L1loss: 11.714 D_PP: 2.527 D_PB: 2.493 pair_GANloss: 3.853 origin_L1: 2.827 perceptual: 8.888 
+(epoch: 1, iters: 400, time: 0.171) pair_L1loss: 11.282 D_PP: 2.006 D_PB: 2.002 pair_GANloss: 3.259 origin_L1: 2.619 perceptual: 8.663 
+(epoch: 1, iters: 600, time: 0.171) pair_L1loss: 11.384 D_PP: 1.902 D_PB: 1.859 pair_GANloss: 3.357 origin_L1: 2.733 perceptual: 8.651 
+(epoch: 1, iters: 800, time: 0.179) pair_L1loss: 11.124 D_PP: 1.794 D_PB: 1.740 pair_GANloss: 2.882 origin_L1: 2.591 perceptual: 8.533 
