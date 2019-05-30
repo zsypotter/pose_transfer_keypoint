@@ -273,7 +273,11 @@ class TransferModel(BaseModel):
         return ret_visuals
 
     def get_current_visuals_tb(self):
-        vis = torch.cat((self.input_P1, self.input_P2, self.fake_p2), 2)
+        img = torch.cat((self.input_P1, self.input_P2, self.fake_p2), 2)
+        bs = img.size(0)
+        vis = img[0]
+        for i in range(1, bs):
+            vis = torch.cat((vis, img[i]), 2)
         vis = (vis + 1) / 2
         return vis
 

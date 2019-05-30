@@ -35,7 +35,7 @@ for epoch in range(opt.epoch_count, opt.niter + opt.niter_decay + 1):
             visualizer.display_current_results(model.get_current_visuals(), epoch, save_result)'''
         if total_steps % opt.display_freq == 0:
             vis = model.get_current_visuals_tb()
-            writer.add_image("vis", vis[0], i + epoch * iters_num)
+            writer.add_image("vis", vis, i + epoch * iters_num)
 
         if total_steps % opt.print_freq == 0:
             errors = model.get_current_errors()
