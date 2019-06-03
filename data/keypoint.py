@@ -8,6 +8,7 @@ import random
 import pandas as pd
 import numpy as np
 import torch
+from glob import glob
 
 
 class KeyDataset(BaseDataset):
@@ -18,7 +19,16 @@ class KeyDataset(BaseDataset):
         self.dir_K = os.path.join(opt.dataroot, opt.phase + 'K') #keypoints
 
         #self.init_categories(opt.pairLst)
-        self.transform = get_transform(opt)
+        #self.transform = get_transform(opt)
+        self.files = glob('/data2/zhousiyu/dataset/vox/pair_data/train/*.jpg')
+        self.length = len(self.files)
+        self.transform1 = transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize(mean=(.5,.5,.5),std=(.5,.5,.5))
+            ])
+        self.transform2 = transforms.Compose([
+                transforms.ToTensor()
+            ])
 
     def init_categories(self, pairLst):
         pairs_file_train = pd.read_csv(pairLst)
@@ -32,10 +42,10 @@ class KeyDataset(BaseDataset):
         print('Loading data pairs finished ...')
 
     def __getitem__(self, index):
-        '''if self.opt.phase == 'train':
-            index = random.randint(0, self.size-1)
+        if self.opt.phase == 'train':
+            index = random.randint(0, self.length-1)
 
-        P1_name, P2_name = self.pairs[index]
+        '''P1_name, P2_name = self.pairs[index]
         P1_path = os.path.join(self.dir_P, P1_name) # person 1
         BP1_path = os.path.join(self.dir_K, P1_name + '.npy') # bone of person 1
 
@@ -85,20 +95,20 @@ class KeyDataset(BaseDataset):
             P1 = self.transform(P1_img)
             P2 = self.transform(P2_img)'''
 
-        P1 = np.random.rand(3, 256, 256)
-        P2 = np.random.rand(3, 256, 256)
-        BP1 = np.random.rand(1, 256, 256)
-        BP2 = np.random.rand(1, 256, 256)
-        P1 = torch.from_numpy(P1).float()
-        P2 = torch.from_numpy(P2).float()
-        BP1 = torch.from_numpy(BP1).float()
-        BP2 = torch.from_numpy(BP2).float()
-        P1_name = str(index) + '_P1'
-        P2_name = str(index) + '_P2'
+
+        img = Image.open(self.files[index]).convert('RGB')
+        P1 = img.crop((0, 0, 256, 256))
+        BP1 = img.crop((256, 0, 512, 256))
+        P2 = img.crop((512, 0, 768, 256))
+        BP2 = img.crop((768, 0, 1024, 256))
+        P1 = self.transform1(P1)
+        BP1 = self.transform2(BP1)
+        P2 = self.transform1(P2)
+        BP2 = self.transform2(BP2)
         
 
         return {'P1': P1, 'BP1': BP1, 'P2': P2, 'BP2': BP2,
-                'P1_path': P1_name, 'P2_path': P2_name}
+                'P1_path': self.files[index], 'P2_path': self.files[index]}
                 
 
     def __len__(self):
