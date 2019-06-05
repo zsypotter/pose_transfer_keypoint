@@ -3,8 +3,7 @@ import os
 from options.test_options import TestOptions
 from data.data_loader import CreateDataLoader
 from models.models import create_model
-from util.visualizer import Visualizer
-from util import html
+import torchvision.utils as vutils
 import time
 
 opt = TestOptions().parse()
@@ -16,20 +15,17 @@ opt.no_flip = True  # no flip
 data_loader = CreateDataLoader(opt)
 dataset = data_loader.load_data()
 model = create_model(opt)
-visualizer = Visualizer(opt)
-# create website
-web_dir = os.path.join(opt.results_dir, opt.name, '%s_%s' % (opt.phase, opt.which_epoch))
 
-webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.which_epoch))
-
-print(opt.how_many)
 print(len(dataset))
-
 model = model.eval()
 print(model.training)
 
 opt.how_many = 999999
 # test
+dest_root = os.path.join(opt.checkpoints_dir, opt.name, opt.which_epoch)
+if not os.path.exists(dest_root):
+    os.makedirs(dest_root)
+    
 for i, data in enumerate(dataset):
     print(' process %d/%d img ..'%(i,opt.how_many))
     if i >= opt.how_many:
@@ -39,14 +35,9 @@ for i, data in enumerate(dataset):
     model.test()
     endTime = time.time()
     print(endTime-startTime)
-    visuals = model.get_current_visuals()
-    img_path = model.get_image_paths()
-    img_path = [img_path]
-    print(img_path)
-    visualizer.save_images(webpage, visuals, img_path)
-
-webpage.save()
-
+    visuals = model.get_current_visuals_save()
+    new_path = os.path.join(dest_root, str(i) + '.jpg')
+    vutils.save_image(visuals, new_path, normalize=True)
 
 
 

@@ -41,7 +41,7 @@ class BaseOptions():
         self.parser.add_argument('--init_type', type=str, default='normal', help='network initialization [normal|xavier|kaiming|orthogonal]')
 
         self.parser.add_argument('--P_input_nc', type=int, default=3, help='# of input image channels')
-        self.parser.add_argument('--BP_input_nc', type=int, default=1, help='# of input image channels')
+        self.parser.add_argument('--BP_input_nc', type=int, default=3, help='# of input image channels')
         self.parser.add_argument('--padding_type', type=str, default='reflect', help='# of input image channels')
         self.parser.add_argument('--pairLst', type=str, default='./keypoint_data/market-pairs-train.csv', help='market pairs')
 

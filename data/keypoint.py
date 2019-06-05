@@ -20,7 +20,7 @@ class KeyDataset(BaseDataset):
 
         #self.init_categories(opt.pairLst)
         #self.transform = get_transform(opt)
-        self.files = glob('/data2/zhousiyu/dataset/vox/pair_data/train/*.jpg')
+        self.files = glob('/data2/zhousiyu/dataset/face_data/new_test/*.jpg')
         self.length = len(self.files)
         self.transform1 = transforms.Compose([
                 transforms.ToTensor(),
@@ -115,7 +115,7 @@ class KeyDataset(BaseDataset):
         if self.opt.phase == 'train':
             return 4000
         elif self.opt.phase == 'test':
-            return self.size
+            return self.length
 
     def name(self):
         return 'KeyDataset'

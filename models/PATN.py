@@ -285,6 +285,16 @@ class TransferModel(BaseModel):
             vis = torch.cat((vis, img[i]), 2)
         return vis
 
+    def get_current_visuals_save(self):
+        vis1 =(self.input_P1 + 1) / 2 
+        vis2 = self.input_BP1
+        vis3 =(self.input_P2 + 1) / 2
+        vis4 = self.input_BP2 
+        vis5 =(self.fake_p2 + 1) / 2 
+        img = torch.cat((vis1, vis2, vis3, vis4, vis5), 2)
+
+        return img.data
+
     def save(self, label):
         self.save_network(self.netG,  'netG',  label, self.gpu_ids)
         if self.opt.with_D_PB:
