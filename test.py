@@ -20,7 +20,7 @@ print(len(dataset))
 model = model.eval()
 print(model.training)
 
-opt.how_many = 999999
+opt.how_many = len(dataset)
 # test
 dest_root = os.path.join(opt.checkpoints_dir, opt.name, opt.which_epoch)
 if not os.path.exists(dest_root):
@@ -28,8 +28,7 @@ if not os.path.exists(dest_root):
     
 for i, data in enumerate(dataset):
     print(' process %d/%d img ..'%(i,opt.how_many))
-    if i >= opt.how_many:
-        break
+
     model.set_input(data)
     startTime = time.time()
     model.test()

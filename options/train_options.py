@@ -35,6 +35,5 @@ class TrainOptions(BaseOptions):
         self.parser.add_argument('--DG_ratio', type=int, default=1, help='how many times for D training after training G once')
 
         
-        
-
+    
         self.isTrain = True

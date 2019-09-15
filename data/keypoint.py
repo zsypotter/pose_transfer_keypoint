@@ -20,7 +20,14 @@ class KeyDataset(BaseDataset):
 
         #self.init_categories(opt.pairLst)
         #self.transform = get_transform(opt)
-        self.files = glob('/data2/zhousiyu/dataset/face_data/new_test/*.jpg')
+        #self.files = glob('/data2/zhousiyu/dataset/vox/dongbo_test/4/*.jpg')
+        #self.files = glob('/data2/zhousiyu/dataset/vox/pair_data/train/*.jpg')
+        #self.files = glob('/data2/zhousiyu/dataset/face_data/fg_test/*.jpg')
+        #self.files = glob('/data2/zhousiyu/dataset/face_data/quantity_test/*.jpg')
+        #self.files = glob('/data2/zhousiyu/dataset/face_data/xiaorong/input/*.jpg')
+        #self.files = glob('/data2/zhousiyu/dataset/face_data/xiaorong/new_input_resize/*.jpg')
+        self.files = glob('/data2/zhousiyu/dataset/utk/xiaorong/input/*.jpg')
+
         self.length = len(self.files)
         self.transform1 = transforms.Compose([
                 transforms.ToTensor(),
